@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aldy Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efek Partikel di Background */
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #0e0e0e;
+        }
+
+        /* Styling Konten */
+        .container {
+            position: relative;
+            background-color: rgba(44, 44, 44, 0.9);
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            margin: 40px auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+        }
+        .container h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ff6347;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 4px 10px rgba(255, 99, 71, 0.6);
+        }
+        .profile-pic {
+            display: block;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            border: 5px solid #ff6347;
+            object-fit: cover;
+        }
+        .biodata {
+            background-color: rgba(58, 58, 58, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .biodata p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin: 15px 0;
+            color: #dddddd;
+        }
+        .biodata label {
+          font-weight: bold;
+            color: #ff6347;
+        }
+        .skills {
+            background-color: rgba(58, 58, 58, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .skills h2 {
+            text-align: center;
+            color: #ff6347;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 10px rgba(255, 99, 71, 0.6);
+        }
+        .skills ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .skills ul li {
+            font-size: 18px;
+            color: #dddddd;
+            padding: 10px 0;
+        }
+        .container button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .container button:hover {
+            background-color: #ff4500;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #888888;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="particleCanvas"></canvas>
+
+<div class="container">
+    <h1>Biodata Lengkap</h1>
+    <img src="assets/style/image/WhatsApp Image 2024-10-01 at 21.49.40_d8abd56e.jpg" alt="Foto Profil" class="profile-pic">
+    
+    <div class="biodata">
+        <p><label>Nama Lengkap:</label> Muhammad Fitrialdy Indrawan</p>
+        <p><label>Tempat, Tanggal Lahir:</label> Berau, 16 November 2004</p>
+        <p><label>Jenis Kelamin:</label> Laki-laki</p>
+        <p><label>Alamat:</label> Jl. Imogiri Barat</p>
+        <p><label>No. Telepon:</label> 085712734695</p>
+        <p><label>Email:</label> aldyindrawanfx@gmail.com</p>
+        <p><label>Agama:</label> Islam</p>
+        <p><label>Hobi:</label> Membaca, Olahraga, Travelling</p>
+        <p><label>Pendidikan Terakhir:</label> S1 Sistem informasi - Universitas Ahmad Dahlan</p>
+    </div>
+
+    <div class="skills">
+      <h2>Keahlian</h2>
+      <ul>
+          <li>Editing</li>
+          <li>CSS</li>
+          <li>Desain Grafis: Photoshop, Illustrator</li>
+          <li>Public Speaking</li>
+      </ul>
+  </div>
+</div>
+
+<footer>
+</footer>
+
+<script>
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let particlesArray = [];
+  const numberOfParticles = 100;
+
+  class Particle {
+      constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 5 + 1;
+          this.speedX = Math.random() * 3 - 1.5;
+          this.speedY = Math.random() * 3 - 1.5;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.size > 0.2) this.size -= 0.1;
+        }
+
+        draw() {
+            ctx.fillStyle = 'rgba(255, 99, 71, 0.8)';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+
+    function init() {
+        particlesArray = [];
+        for (let i = 0; i < numberOfParticles; i++) {
+            particlesArray.push(new Particle());
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', function() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        init();
+    });
+
+    init();
+    animate();
+</script>
+
+</body>
+</html>
